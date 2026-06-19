@@ -1,17 +1,17 @@
 import { Toaster } from 'react-hot-toast';
 import { Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
-import AppLayout from './pages/AppLoyout';
-import Home from './pages/Home';
-import Products from './pages/Products';
-import ProductPage from './pages/ProductPage';
-import SearchResult from './pages/SearchResult';
-import FlashDeals from './pages/FlashDeals';
-import Checkout from './pages/Checkout';
-import MyOrders from './pages/MyOrders';
+import AppLayout from './pages/AppLayout';
+import Productos from './pages/Productos';
+import CarritoCompras from './pages/CarritoCompras'
 import OrderTracking from './pages/OrderTracking';
-import Addresses from './pages/Addresses';
 import ProtectedRoute from './components/ProtectedRoute';
+import PaginaProductos from './pages/PaginaProductos';
+import BuscarResultados from './pages/BuscarResultados';
+import OfertaRelampago from './pages/OfertaRelampago';
+import MisOrdenes from './pages/MisOrders';
+import Direcciones from './pages/Direcciones';
+import Inicio from './pages/Inicio';
 
 const App = () => {
   return (
@@ -28,16 +28,16 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         {/* Auth pages - With Navbar/Footer */}
         <Route path='/' element={<AppLayout />}>
-          <Route index element={<Home />} />
-          <Route path="products" element={<Products />} />
-          <Route path="products/:id" element={<ProductPage />} />
-          <Route path="search" element={<SearchResult />} />
-          <Route path="deals" element={<FlashDeals />} />
+          <Route index element={<Inicio />} />
+          <Route path="productos" element={<Productos />} />
+          <Route path="productos/:id" element={<PaginaProductos />} />
+          <Route path="search" element={<BuscarResultados />} />
+          <Route path="deals" element={<OfertaRelampago />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="checkout" element={<Checkout />}  />
-            <Route path="orders" element={<MyOrders />}  />
+            <Route path="checkout" element={<CarritoCompras />}  />
+            <Route path="orders" element={<MisOrdenes />}  />
             <Route path="orders/:id" element={<OrderTracking />}  />
-            <Route path="addresses" element={<Addresses />}  />
+            <Route path="addresses" element={<Direcciones />}  />
           </Route>
         </Route>
       </Routes>

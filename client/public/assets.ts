@@ -35,18 +35,18 @@ export const heroSectionData = {
     description: "Fresh, organic groceries delivered from local farms to your doorstep. Quality you can taste, convenience you deserve.",
     hero_image: hero_bg,
     hero_features: [
-        { icon: TruckIcon, title: "Free Delivery", desc: "Orders over $20" },
-        { icon: LeafIcon, title: "100% Organic", desc: "Certified products" },
-        { icon: ClockIcon, title: "Same Day", desc: "Express delivery" },
-        { icon: ShieldCheckIcon, title: "Secure Pay", desc: "Safe checkout" },
+        { icon: TruckIcon, title: "Domicilio Gratis", desc: "Ordenes Superiores $20" },
+        { icon: LeafIcon, title: "100% Organico", desc: "Productos Certificados" },
+        { icon: ClockIcon, title: "Mismo Día", desc: "Domicilios Expresos" },
+        { icon: ShieldCheckIcon, title: "Pago Seguro", desc: "Seguridad en su Pago" },
     ],
 };
 
 export const deliveryPartnerLoginImage = "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=200";
 
 export const appPromoBannerData = {
-    title: "Get fresh groceries in minutes",
-    description: "Download the Instacart app for exclusive deals, real-time tracking, and the freshest selection delivered right to your door.",
+    title: "Recibe tus compras de productos frescos en minutos",
+    description: "Descargar la app de Instacart para acceder a ofertas exclusivas, seguimiento en tiempo real y la selección más fresca directamente en tu puerta.",
 };
 
 export const footerData = {
@@ -62,21 +62,21 @@ export const footerData = {
 
     sections: [
         {
-            title: "Quick Links",
+            title: "Enlaces Rápidos",
             links: [
-                { label: "All Products", to: "/products" },
-                { label: "Flash Deals", to: "/deals" },
-                { label: "Track Order", to: "/orders" },
-                { label: "Delivery Partner", to: "/delivery" },
+                { label: "Todos los Productos", to: "/products" },
+                { label: "Ofertas Relampago", to: "/deals" },
+                { label: "Sigue tu Pedido", to: "/orders" },
+                { label: "Domiciliario", to: "/delivery" },
             ],
         },
         {
-            title: "Customer Service",
+            title: "Servicio al Cliente",
             links: [
-                { label: "My Account", to: "#" },
-                { label: "Order History", to: "#" },
-                { label: "Addresses", to: "#" },
-                { label: "Help Center", href: "#" },
+                { label: "Mi Cuenta", to: "#" },
+                { label: "Historial de Pedidos", to: "#" },
+                { label: "Direcciones", to: "#" },
+                { label: "Centro de Ayuda", href: "#" },
             ],
         },
     ],
@@ -90,8 +90,8 @@ export const footerData = {
     bottom: {
         copyright: "© 2026 Greatstack. All rights reserved.",
         links: [
-            { label: "Privacy Policy", href: "#" },
-            { label: "Terms of Service", href: "#" },
+            { label: "Políticas de Privacidad", href: "#" },
+            { label: "Terminos de Servicio", href: "#" },
         ],
     },
 };
@@ -180,6 +180,7 @@ export const dummyProducts = [
         stock: 100,
         isOrganic: false,
         rating: 4.5,
+
         reviewCount: 12,
         __v: 0,
         createdAt: "2026-03-24T05:50:11.118Z",

@@ -1,14 +1,19 @@
 import { Outlet } from "react-router-dom";
+import Banner from "../components/Banner";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import Home from "./Home";
 
 const AppLoyout = () => {
     return (
         <>
-            <p>banner</p>
-            <p>navbar</p>
+            <Banner />
+            <Navbar />
+            <Home />
             <main className="min-h-screen">
                 <Outlet />
             </main>
-            <p>footer</p>
+            <Footer/>
             <p>chatsidebar</p>
         </>
     )
