@@ -1,4 +1,4 @@
-import { heroSectionData } from "../../../public/assets";
+import { heroSectionData } from "../../assets/assets";
 
 const Features = () => {
   return (

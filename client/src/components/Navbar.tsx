@@ -1,15 +1,12 @@
 import { ArrowUpRightIcon, BikeIcon, ChevronDownIcon, LogOutIcon, MapPinIcon, MenuIcon, PackageIcon, SearchIcon, ShieldIcon, ShoppingCartIcon, UserIcon, XIcon } from "lucide-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {useCart} from "../context/CartContext";
 
 const Navbar = () => {
 
     const user: any = {name: "John Wilmar", email: "john@example.com", isAdmin: true}
-    const {cartCount, setIsCartOpen} = {
-        cartCount: 5,
-        setIsCartOpen: (_data: any) => {}
-    };
-
+    const {cartCount, setIsCartOpen} = useCart();
     const [searchQuery, setSearchQuery] = useState("")
     const [userMenuOpen, setUserMenuOpen] = useState(false)
     const navigate = useNavigate()
@@ -36,7 +33,7 @@ const Navbar = () => {
           </Link>
 
           {/* CORREGIDO: Contenedor flex-1 con items-center y gap fluido para el comportamiento Desktop */}
-          <div className="flex-1 flex items-center justify-end gap-4 lg:gap-8">
+          <div className="w-full flex items-center justify-end gap-4 lg:gap-10">
             
             {/* Nav Links - Desktop */}
             <div className="hidden md:flex items-center gap-6 text-sm text-zinc-600 shrink-0">
@@ -72,7 +69,7 @@ const Navbar = () => {
                   </button>
                 ) : (
                   <div className="flex items-center justify-center gap-2">
-                    <Link to="/login" className="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-950 transition-colors">
+                    <Link to="/login" className="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-950 rounded-full  hover:bg-green-950-light transition-colors">
                     <UserIcon size={16}/> Iniciar Sesión
                     </Link>
                     {userMenuOpen ? <XIcon className="md:hidden" onClick={() => setUserMenuOpen(!userMenuOpen)}/> : <MenuIcon className="md:hidden" onClick={() => setUserMenuOpen(!userMenuOpen)}/>}
@@ -90,7 +87,7 @@ const Navbar = () => {
                         </div>
                       )}
                       <div onClick={()=> setUserMenuOpen(false)}>
-                        {!user && <Link to='/login' className="dropdown-link"><UserIcon size={16}/>Iniciar Sesión</Link>}
+                        {!user && <Link to='/iniciar-sesion' className="dropdown-link"><UserIcon size={16}/>Iniciar Sesión</Link>}
                         {user && <Link to='/ordenes' className="dropdown-link"><PackageIcon size={16}/>Mis Ordenes</Link>}
                         {user && <Link to='/direcciones' className="dropdown-link"><MapPinIcon size={16}/>Direcciones</Link>}
                         

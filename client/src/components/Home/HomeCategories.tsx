@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { categoriesData } from "../../../public/assets";
+import { categoriesData } from "../../assets/assets";
 
 const HomeCategories = () => {
     return (

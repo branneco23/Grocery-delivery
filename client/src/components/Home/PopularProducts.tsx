@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import type { Product } from "../../types"
-import { dummyProducts } from "../../../public/assets"
+import { dummyProducts } from "../../../src/assets/assets"
 import { Link } from "react-router-dom"
 import { ArrowBigRightIcon } from "lucide-react"
 import ProductCard from "../ProductCard"

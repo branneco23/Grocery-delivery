@@ -1,6 +1,6 @@
 import { BikeIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-import { footerData } from "../../public/assets";
+import { footerData } from "../assets/assets";
 
 const Footer = () => {
     return (
@@ -16,7 +16,9 @@ const Footer = () => {
                         <p className="text-sm text-white/70 mb-4">{footerData.brand.description}</p>
                         <div className="flex gap-3">
                             {footerData.brand.socials.map((social, i) => (
-                                <a key={i} href={social.link} className="size-9 rounded-lg bg-white/10 flex-center hover:bg-white/2"><social.icon className="size-4" /></a>
+                                <a key={i} href={social.link} className="size-9 rounded-lg bg-white/10 flex-center hover:bg-white/2">
+                                    <social.icon className="size-4" />
+                                </a>
                             ))}
                         </div>
                     </div>
@@ -32,7 +34,9 @@ const Footer = () => {
                                                 {link.label}
                                             </Link>
                                         ) : (
-                                            <a href={link.href} className="text-sm text-white/70 hover:text-white">{link.label}</a>
+                                            <a href={link.href} className="text-sm text-white/70 hover:text-white">
+                                                {link.label}
+                                            </a>
                                         )}
                                     </li>
                                 ))}
