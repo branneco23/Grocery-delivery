@@ -46,8 +46,8 @@ const App = () => {
           
           <Route element={<ProtectedRoute />}>
             <Route path="checkout" element={<CarritoCompras />} />
-            <Route path="orders" element={<MisOrdenes />} />
-            <Route path="orders/:id" element={<OrderTracking />} />
+            <Route path="ordenes" element={<MisOrdenes />} />
+            <Route path="ordenes/:id" element={<OrderTracking />} />
             <Route path="addresses" element={<Direcciones />} />
           </Route>
         </Route>

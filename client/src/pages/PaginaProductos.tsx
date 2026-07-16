@@ -177,7 +177,7 @@ const PaginaProductos = () => {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-2xl font-semibold text-app-green">Productos Relacionados</h2>
-                <p className="text-sm text-app-text-light mt-1">Más de {categoryLabel}</p>
+                <p className="text-sm text-app-text-light leading-relaxed mb-6">{product.description}</p>
               </div>
               <Link className="text-sm font-semibold text-app-orange hover:text-app-orange-dark flex items-center gap-1 transition-colors" to={`/products?category=${product.category}`}>
                 Ver Todo <ArrowRightIcon className="size-4" />
