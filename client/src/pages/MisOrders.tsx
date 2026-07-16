@@ -19,14 +19,13 @@ const MisOrdenes = () => {
 
   const fetchOrders = async () => {
     setLoading(true);
-    // Filtramos las órdenes según el tab activo (si no es "all", filtramos por status)
     const allOrders = dummyDashboardOrdersData as unknown as Order[];
     if (activeTab === "all") {
       setOrders(allOrders);
     } else {
       setOrders(allOrders.filter((order) => order.status === activeTab));
     }
-    setLoading(false); // CORREGIDO: Desactiva el estado de carga
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -52,18 +51,19 @@ const MisOrdenes = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 text-sm font-medium rounded-xl whitespace-nowrap transition-colors ${activeTab === tab
+              className={`px-4 py-2 text-sm font-medium rounded-xl whitespace-nowrap transition-colors ${
+                activeTab === tab
                   ? "bg-app-green text-white"
                   : "bg-white text-app-text-light hover:bg-app-cream"
-                }`}
+              }`}
             >
               {tab === "all"
                 ? "Todas las Órdenes"
                 : tab === "Placed"
-                  ? "Preparando"
-                  : tab === "Out for Delivery"
-                    ? "En Camino"
-                    : "Entregado"}
+                ? "Preparando"
+                : tab === "Out for Delivery"
+                ? "En Camino"
+                : "Entregado"}
             </button>
           ))}
         </div>
@@ -87,7 +87,7 @@ const MisOrdenes = () => {
             {orders.map((order) => (
               <Link
                 key={order._id}
-                to={`/ordenes/${order._id}`} // CORREGIDO: Coincide con la ruta '/ordenes/:id' de App.tsx
+                to={`/ordenes/${order._id}`}
                 className="block max-w-4xl bg-white rounded-2xl p-5 hover:shadow transition-all border border-app-border"
               >
                 {/* Order id, date & status */}
@@ -116,35 +116,40 @@ const MisOrdenes = () => {
                       {order.status === "Placed"
                         ? "Recibido"
                         : order.status === "Out for Delivery"
-                          ? "En camino"
-                          : "Entregado"}
+                        ? "En camino"
+                        : "Entregado"}
                     </span>
                   </div>
                 </div>
 
-                {/* COMPLETADO: Miniaturas de ítems */}
+                {/* Miniaturas de ítems - CORREGIDO CON FALLBACKS DE IMAGEN */}
                 <div className="flex items-center gap-3 overflow-x-auto py-2 my-2 border-t border-b border-gray-100">
-                  {order.items.map((item, idx) => (
-                    <div key={idx} className="relative shrink-0">
-                      <img
-                        src={item.product.image}
-                        alt={item.product.name}
-                        className="size-14 rounded-lg object-cover border border-gray-100"
-                      />
-                      <span className="absolute -top-1 -right-1 bg-app-green text-white text-[10px] font-bold size-5 rounded-full flex items-center justify-center border border-white">
-                        {item.quantity}
-                      </span>
-                    </div>
-                  ))}
+                  {order.items.map((item: any, idx) => {
+                    // Mapeo seguro para encontrar la ruta de la imagen en dummyData
+                    const productImg = item.product?.image || item.image || (item.product && item.product[0]?.image);
+                    const productName = item.product?.name || item.name || "Producto";
+
+                    return (
+                      <div key={idx} className="relative shrink-0">
+                        <img
+                          src={productImg}
+                          alt={productName}
+                          className="size-14 rounded-lg object-cover border border-gray-100 bg-zinc-50"
+                        />
+                        <span className="absolute -top-1 -right-1 bg-app-green text-white text-[10px] font-bold size-5 rounded-full flex items-center justify-center border border-white">
+                          {item.quantity}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
 
-                {/* COMPLETADO: Total ítems & Precio final */}
+                {/* Total ítems & Precio final */}
                 <div className="flex items-center justify-between mt-3 text-sm pt-1">
                   <p className="text-app-text-light">
                     {order.items.reduce((acc, item) => acc + item.quantity, 0)} productos
                   </p>
                   <p className="font-semibold text-app-green text-base">
-                    {/* Si 'amount' no existe, buscará 'total', y si ninguno existe, usará 0 */}
                     Total: {currency}
                     {((order.amount !== undefined ? order.amount : (order as any).total) || 0).toFixed(2)}
                   </p>

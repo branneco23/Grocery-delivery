@@ -89,7 +89,7 @@ const Navbar = () => {
                       <div onClick={()=> setUserMenuOpen(false)}>
                         {!user && <Link to='/iniciar-sesion' className="dropdown-link"><UserIcon size={16}/>Iniciar Sesión</Link>}
                         {user && <Link to='/ordenes' className="dropdown-link"><PackageIcon size={16}/>Mis Ordenes</Link>}
-                        {user && <Link to='/direcciones' className="dropdown-link"><MapPinIcon size={16}/>Direcciones</Link>}
+                        {user && <Link to='/addresses' className="dropdown-link"><MapPinIcon size={16}/>Direcciones</Link>}
                         
                         {/* Enlaces repetidos en móvil si está el menú abierto */}
                         <div className="md:hidden border-t border-app-border my-1 pt-1">

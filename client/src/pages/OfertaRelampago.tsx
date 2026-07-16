@@ -22,7 +22,7 @@ const OfertaRelampago = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <div className="flex-center gap-2 mb-3">
                         <Zap className="size-6 fill-white"/>
-                        <h1 text-3xl font-semibold>Ofertas Relampago</h1>
+                        <h1 className="text-3xl font-semibold">Ofertas Relampago</h1>
                         <Zap className="size-6 fill-white"/>
                     </div>
                     <p className="text-white/80 max-w-md mx-auto">Ofertas por tiempo limitado en tus productos orgánicos favoritos. ¡Consíguelos antes de que se agoten!</p>
