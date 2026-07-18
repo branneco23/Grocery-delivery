@@ -16,15 +16,15 @@ const ProductCard = ({ product }: Props) => {
     const navigate = useNavigate();
 
     return (
-        <div 
-            className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-md transition-all duration-300 group animate-fade-in cursor-pointer" 
+        <div
+            className="bg-white rounded-2xl overflow-hidden shadow hover:shadow-md transition-all duration-300 group animate-fade-in cursor-pointer"
             onClick={() => navigate(`/products/${product._id}`)}
         >
             {/* Image */}
             <div className="relative aspect-square overflow-hidden">
-                <img 
-                    src={product.image} 
-                    alt={product.name} 
+                <img
+                    src={product.image}
+                    alt={product.name}
                     className="w-full h-full object-cover p-4 group-hover:p-2 transition-all duration-300"
                 />
 
@@ -62,16 +62,16 @@ const ProductCard = ({ product }: Props) => {
                             </span>
                         )}
                     </div>
-                    
+
                     {/* Botón interactivo corregido con addToCart */}
-                    <button 
+                    <button
                         onClick={(e) => {
-                            e.stopPropagation(); 
+                            e.stopPropagation();
                             addToCart(product);
-                        }} 
+                        }}
                         className="size-7 rounded-full bg-app-orange text-white flex items-center justify-center shrink-0 hover:bg-app-orange-dark transition-colors active:scale-95"
                     >
-                        <Plus className='size-3.5'/>
+                        <Plus className='size-3.5' />
                     </button>
                 </div>
             </div>
