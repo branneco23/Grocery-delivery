@@ -60,6 +60,7 @@ const App = () => {
             <Route path="addresses" element={<Direcciones />} />
           </Route>
         </Route>
+        
         {/*Admin Pages*/}
         <Route path='/admin' element={<AdminLayout/>}>
           <Route index element={<AdminDashboard/>}/>
@@ -69,6 +70,7 @@ const App = () => {
           <Route path='orders' element={<AdminOrders/>}/>
           <Route path='delivery-partners' element={<AdminDeliveryPartners/>}/>
         </Route>
+        
         {/*Delivery Partner pages*/}
         <Route path='/delivery/login' element={<DeliveryLogin/>}/>
         <Route path='/delivery' element={<DeliveryLayout/>}>
