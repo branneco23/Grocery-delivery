@@ -1,3 +1,15 @@
-node_modules
-node_modules
+# Ignorar dependencias
+node_modules/
+
+# Ignorar archivos .env en CUALQUIER carpeta (raíz, server, client)
 .env
+.env.*
+*.env
+server/.env
+client/.env
+
+# Ignorar builds y logs
+.vercel
+dist/
+build/
+npm-debug.log*
