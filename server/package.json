@@ -2,17 +2,16 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.ts",
+  "type": "module",
   "scripts": {
-    "postinstall": "npx prisma generate",
+    "build": "prisma generate",
     "start": "tsx server.ts",
-    "server": "nodemon --exec tsx server.ts",
-    "build": "tsc"
+    "server": "nodemon --exec tsx server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
     "@prisma/adapter-neon": "^6.19.3",
     "@prisma/client": "^6.19.3",
@@ -21,6 +20,7 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "inngest": "^4.13.0",
     "jsonwebtoken": "^9.0.3",
     "multer": "^2.2.0",
     "nodemailer": "^9.0.3",

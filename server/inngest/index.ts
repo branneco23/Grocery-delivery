@@ -69,7 +69,7 @@ const sendMonthlyOffers = inngest.createFunction({
             take: 6,
         })
 
-        const allUsers = await prisma.user.findMany({ select: { name: true, email: true } })
+        const allUsers = await prisma.user.findMany({ select: { name: true, email: true }})
         return { deals: products, users: allUsers }
     })
 
