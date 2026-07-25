@@ -6,11 +6,11 @@
   "type": "module",
   
   "scripts": {
-    "postinstall": "prisma generate",
-    "build": "tsc",
-    "start": "node dist/server.js",
-    "server": "nodemon --exec tsx server.ts"
-  },
+  "postinstall": "node node_modules/prisma/build/index.js generate",
+  "build": "tsc",
+  "start": "node dist/server.js",
+  "server": "nodemon --exec tsx server.ts"
+  }
   "keywords": [],
   "author": "",
   "license": "ISC",
