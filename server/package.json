@@ -9,7 +9,8 @@
   "postinstall": "node node_modules/prisma/build/index.js generate",
   "build": "tsc",
   "start": "node dist/server.js",
-  "server": "nodemon --exec tsx server.ts"
+  "server": "nodemon --exec tsx server.ts",
+  "seed": "tsx seed.ts"
   },
   
   "keywords": [],
