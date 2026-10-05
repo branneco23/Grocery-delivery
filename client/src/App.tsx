@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
 import AppLayout from './pages/AppLayout';
 import Home from './pages/Home'; 
-import Productos from './pages/Productos'; // Importa tu componente actual
+import Productos from './pages/Productos';
 import CarritoCompras from './pages/CarritoCompras';
 import OrderTracking from './pages/OrderTracking';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -46,7 +46,6 @@ const App = () => {
         <Route path='/' element={<AppLayout />}>
           <Route index element={<Home />} /> 
           
-          {/* CORREGIDO: Cambiado a "products" para que coincida con la URL que busca el navegador (/products) */}
           <Route path="products" element={<Productos />} />
           <Route path="products/:id" element={<PaginaProductos />} />
           
@@ -61,7 +60,7 @@ const App = () => {
           </Route>
         </Route>
         
-        {/*Admin Pages*/}
+        {/* Admin Pages (Soporta tanto rutas en inglés como en español para evitar errores de enlace) */}
         <Route path='/admin' element={<AdminLayout/>}>
           <Route index element={<AdminDashboard/>}/>
           <Route path='products' element={<AdminProducts/>}/>
@@ -70,8 +69,17 @@ const App = () => {
           <Route path='orders' element={<AdminOrders/>}/>
           <Route path='delivery-partners' element={<AdminDeliveryPartners/>}/>
         </Route>
+
+        {/* Ruta alias en español para que coincida exactamente con el Navbar */}
+        <Route path='/administrador' element={<AdminLayout/>}>
+          <Route index element={<AdminDashboard/>}/>
+          <Route path='productos' element={<AdminProducts/>}/>
+          <Route path='productos/nuevo' element={<AdminProductForm/>}/>
+          <Route path='productos/:id/editar' element={<AdminProductForm/>}/>
+          <Route path='ordenes' element={<AdminOrders/>}/>
+        </Route>
         
-        {/*Delivery Partner pages*/}
+        {/* Delivery Partner pages */}
         <Route path='/delivery/login' element={<DeliveryLogin/>}/>
         <Route path='/delivery' element={<DeliveryLayout/>}>
           <Route index element={<DeliveryDashboard/>}/>

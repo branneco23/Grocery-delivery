@@ -1,25 +1,27 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import { dummyAddressData } from "../assets/assets";
 import type { Address } from "../types";
 import { ArrowLeft, CheckIcon, ChevronRight, CreditCardIcon, MapPinIcon } from "lucide-react";
 import CheckoutAddress from "../components/Checkout/CheckoutAddress";
 import CheckoutPayment from "../components/Checkout/CheckoutPayment";
 import CheckoutReview from "../components/Checkout/CheckoutReview";
+import api from "../config/api";
+import { toast } from "react-hot-toast";
+import { useAuth } from "../context/AuthContext";
 
 const Checkout = () => {
   const navigate = useNavigate();
   const currency = import.meta.env.VITE_CURRENCY_SYMBOL || '$';
 
-  const { items, cartTotal } = useCart();
-  const { user } = { user: { addresses: dummyAddressData } };
+  const { items, cartTotal, clearCart } = useCart();
+  const { user } = useAuth()
 
   const [step, setStep] = useState("address");
   const [loading, setLoading] = useState(false);
 
   const [address, setAddress] = useState<Address>({
-    _id: "",
+    id: "",
     label: "Inicio",
     address: "",
     city: "",
@@ -44,7 +46,33 @@ const Checkout = () => {
 
   const handlePlaceOrder = async () => {
     setLoading(true);
-    navigate("/orders");
+    try {
+      const orderData = {
+        items: items.map(item => ({
+          productId: item.product.id,
+          quantity: item.quantity,
+        })),
+        shippingAddress: address,
+        paymentMethod
+      }
+
+      // Forzamos la URL absoluta directamente aquí para descartar problemas de baseURL
+      const { data } = await api.post('http://localhost:5000/api/orders', orderData);
+      console.log(data);
+
+      if (data.url) {
+        window.location.href = data.url;
+        return;
+      }
+      clearCart();
+      toast.success("Orden creada exitosamente");
+      navigate(`/orders/${data.order.id}`);
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || error.message);
+    } finally {
+      setLoading(false);
+      scrollTo(0, 0);
+    }
   };
 
   // Populate address from user's default address
@@ -52,7 +80,7 @@ const Checkout = () => {
     if (user?.addresses?.length) {
       const defaultAddr = user.addresses.find((a) => a.isDefault) || user.addresses[0];
       setAddress({
-        _id: defaultAddr?._id,
+        id: defaultAddr?.id,
         label: defaultAddr?.label,
         address: defaultAddr?.address,
         city: defaultAddr?.city,
@@ -96,8 +124,8 @@ const Checkout = () => {
               <button
                 onClick={() => setStep(s.key)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors ${step === s.key
-                    ? "bg-[#1E3A27] text-white"
-                    : "bg-white text-app-text-light border border-slate-100"
+                  ? "bg-[#1E3A27] text-white"
+                  : "bg-white text-app-text-light border border-slate-100"
                   }`}
               >
                 <s.icon className="size-4" /> {s.label}

@@ -3149,7 +3149,7 @@ declare interface RequestError {
         message: string;
         meta?: Record<string, unknown>;
         error_code?: string;
-        batch_request_idx?: number;
+        batch_requestidx?: number;
     };
 }
 
@@ -3923,14 +3923,14 @@ declare namespace Utils {
 }
 
 declare type ValidationError = {
-    error_identifier: 'RELATION_VIOLATION';
+    erroridentifier: 'RELATION_VIOLATION';
     context: {
         relation: string;
         modelA: string;
         modelB: string;
     };
 } | {
-    error_identifier: 'MISSING_RELATED_RECORD';
+    erroridentifier: 'MISSING_RELATED_RECORD';
     context: {
         model: string;
         relation: string;
@@ -3939,24 +3939,24 @@ declare type ValidationError = {
         neededFor?: string;
     };
 } | {
-    error_identifier: 'MISSING_RECORD';
+    erroridentifier: 'MISSING_RECORD';
     context: {
         operation: string;
     };
 } | {
-    error_identifier: 'INCOMPLETE_CONNECT_INPUT';
+    erroridentifier: 'INCOMPLETE_CONNECT_INPUT';
     context: {
         expectedRows: number;
     };
 } | {
-    error_identifier: 'INCOMPLETE_CONNECT_OUTPUT';
+    erroridentifier: 'INCOMPLETE_CONNECT_OUTPUT';
     context: {
         expectedRows: number;
         relation: string;
         relationType: string;
     };
 } | {
-    error_identifier: 'RECORDS_NOT_CONNECTED';
+    erroridentifier: 'RECORDS_NOT_CONNECTED';
     context: {
         relation: string;
         parent: string;

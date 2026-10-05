@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import type { Product, Category } from '../types';
-import { dummyProducts, categoriesData } from '../assets/assets'; // 1. Importado categoriesData
+import type { Product } from '../types';
+import { categoriesData } from '../assets/assets'; // 1. Importado categoriesData
 import { ChevronDown, Home as HomeIcon, SlidersHorizontal, XIcon } from 'lucide-react'; // 2. Renombrado para que no choque con la página Home
 import ProductCard from '../components/ProductCard'; // Importación de tus tarjetas
 import Loading from '../components/Loading';
 import FilterPanel from '../components/FilterPanel';
+import api from '../config/api';
+import { toast } from 'react-hot-toast/headless';
 
 const Productos = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,8 +25,24 @@ const Productos = () => {
 
   const fetchProducts = async () => {
     setLoading(true);
-    setProducts(dummyProducts.filter((p) => p.category === category || category === ""));
-    setLoading(false);
+    try {
+      const params = new URLSearchParams();
+      if (category) params.append('category', category);
+      if (organic) params.append('organic', organic);
+      if (sort) params.append('sort', sort);
+      if (page) params.append('page', String(page));
+      if (maxPrice) params.append('maxPrice', maxPrice);
+        params.set('page', String(page));
+        params.set('limit', '12'); // Ajusta el límite según tus necesidades
+
+        const { data } = await api.get(`/products?${params.toString()}`);
+        setProducts(data.products);
+        setTotalPages(data.pages);
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || error.message);
+    }finally {
+      setLoading(false);
+    }
   }
 
   const updateFilter = (key: string, value: string) => {
@@ -112,7 +130,7 @@ const Productos = () => {
             ) : (
               <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 xl:gap-8'>
                 {products.map((product) => product.stock > 0 && (
-                  <ProductCard key={product._id} product={product} />
+                  <ProductCard key={product.id} product={product} />
                 ))}
               </div>
             )}

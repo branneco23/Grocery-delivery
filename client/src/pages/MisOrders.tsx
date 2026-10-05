@@ -86,15 +86,15 @@ const MisOrdenes = () => {
           <div className="space-y-4">
             {orders.map((order) => (
               <Link
-                key={order._id}
-                to={`/ordenes/${order._id}`}
+                key={order.id}
+                to={`/ordenes/${order.id}`}
                 className="block max-w-4xl bg-white rounded-2xl p-5 hover:shadow transition-all border border-app-border"
               >
                 {/* Order id, date & status */}
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <p className="text-sm font-medium text-app-green">
-                      Orden #{order._id.slice(-8).toUpperCase()}
+                      Orden #{order.id.slice(-8).toUpperCase()}
                     </p>
                     <div className="flex items-center gap-2 mt-1">
                       <CalendarIcon className="size-3.5 text-app-text-light" />

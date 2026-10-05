@@ -1,17 +1,17 @@
 export interface User {
-    _id: string;
+    id: string;
     name: string;
     email: string;
     phone: string;
     avatar: string;
     addresses: Address[];
-    isAdmin?: boolean;
+    isAdmin?: boolean; // <--- Asegúrate de que esté aquí
     createdAt: string;
     updatedAt: string;
 }
 
 export interface Address {
-    _id: string;
+    id: string;
     label: string;
     address: string;
     city: string;
@@ -29,7 +29,7 @@ export interface Category {
 }
 
 export interface Product {
-    _id: string;
+    id: string;
     name: string;
     description: string;
     price: number;
@@ -60,7 +60,7 @@ export interface OrderItem {
 }
 
 export interface DeliveryPartner {
-    _id: string;
+    id: string;
     name: string;
     email: string;
     phone: string;
@@ -71,10 +71,10 @@ export interface DeliveryPartner {
 }
 
 export interface Order {
-    _id: string;
-    user: string | { _id: string; name: string; email: string; phone?: string };
+    id: string;
+    user: string | { id: string; name: string; email: string; phone?: string };
     items: OrderItem[];
-    shippingAddress: Omit<Address, "_id" | "isDefault">;
+    shippingAddress: Omit<Address, "id" | "isDefault">;
     paymentMethod: string;
     subtotal: number;
     deliveryFee: number;

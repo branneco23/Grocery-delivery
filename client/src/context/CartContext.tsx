@@ -32,7 +32,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         setItems((prev)=>{
             const existing = prev.find(item => item.product.id === product.id);
             if (existing) {
-                return prev.map((item) = (item.product._id === product._id ? {...item, quantity: item.quantity + quantity} : item));
+                return prev.map((item) = (item.product.id === product.id ? {...item, quantity: item.quantity + quantity} : item));
             }
             return [...prev, { product, quantity }]
         })
@@ -40,7 +40,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
 
     const removeFromCart = (productId: string) => {
-        setItems((prev) => prev.filter((item) => item.product._id !== productId));
+        setItems((prev) => prev.filter((item) => item.product.id !== productId));
     }
 
     const updateQuantity = (productId: string, quantity: number) => {
@@ -48,7 +48,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             removeFromCart(productId);
             return;
         }
-        setItems((prev) => prev.map((item) => (item.product._id === productId ? { ...item, quantity } : item)));
+        setItems((prev) => prev.map((item) => (item.product.id === productId ? { ...item, quantity } : item)));
     }
 
     const clearCart = () => {

@@ -3,6 +3,8 @@ import { useState } from 'react';
 import heroSectionData from '../assets/hero_bg.jpeg';
 import { Link } from 'react-router-dom';
 import { BikeIcon, Loader2Icon, LockIcon, MailIcon, UserIcon } from 'lucide-react';
+import toast from 'react-hot-toast'
+import { useAuth } from '../context/AuthContext';
 
 // SE ELIMINÓ LA CONSTANTE REPETIDA QUE CAUSABA EL ERROR
 
@@ -13,10 +15,23 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const { login, register } = useAuth(); // Asegúrate de que useAuth esté correctamente importado y definido
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true);
-    setTimeout(() => window.location.href = "/", 1000)
+    try {
+      if (isLoginState) {
+        // Lógica de inicio de sesión
+        await login(email, password);
+      }else{
+        await register(name, email, password);
+      }
+    }catch (error: any) {
+      toast.error(error.response?.data?.message || error?.message);
+    }finally {
+      setLoading(false);
+    }
   }
 
   return (

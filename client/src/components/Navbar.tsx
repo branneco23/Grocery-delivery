@@ -1,28 +1,30 @@
 import { ArrowUpRightIcon, BikeIcon, ChevronDownIcon, LogOutIcon, MapPinIcon, MenuIcon, PackageIcon, SearchIcon, ShieldIcon, ShoppingCartIcon, UserIcon, XIcon } from "lucide-react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {useCart} from "../context/CartContext";
+import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
 
-    const user: any = {name: "John Wilmar", email: "john@example.com", isAdmin: true}
-    const {cartCount, setIsCartOpen} = useCart();
-    const [searchQuery, setSearchQuery] = useState("")
-    const [userMenuOpen, setUserMenuOpen] = useState(false)
-    const navigate = useNavigate()
+    const { user, logout } = useAuth();
+    const { cartCount, setIsCartOpen } = useCart();
+    const [searchQuery, setSearchQuery] = useState("");
+    const [userMenuOpen, setUserMenuOpen] = useState(false);
+    const navigate = useNavigate();
 
-    const handleSearch = (e: React.SubmitEvent) => {
-      e.preventDefault()
+    const handleSearch = (e: React.FormEvent) => { // Corregido el tipo de evento de React.SubmitEvent a React.FormEvent
+      e.preventDefault();
       if(searchQuery.trim()){
-        navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
-        setSearchQuery("")
+        navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+        setSearchQuery("");
       }
-    }
+    };
 
     const handleLogout = () => {
-      setUserMenuOpen(false)
+      logout();
+      setUserMenuOpen(false);
       navigate("/");
-    }
+    };
 
   return (
     <nav className="bg-white sticky top-0 z-50 border-b border-app-border">
@@ -32,7 +34,7 @@ const Navbar = () => {
             <BikeIcon size={24} /> Instacart
           </Link>
 
-          {/* CORREGIDO: Contenedor flex-1 con items-center y gap fluido para el comportamiento Desktop */}
+          {/* Contenedor principal de acciones */}
           <div className="w-full flex items-center justify-end gap-4 lg:gap-10">
             
             {/* Nav Links - Desktop */}
@@ -42,7 +44,7 @@ const Navbar = () => {
               <Link to='/deals'>Ofertas</Link>
             </div>
 
-            {/*Busqueda*/}
+            {/* Búsqueda */}
             <form onSubmit={handleSearch} className="hidden sm:flex flex-1 max-w-sm text-xs sm:text-sm">
               <div className="relative w-full">
                 <SearchIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 size-4 text-zinc-500"/>
@@ -58,24 +60,25 @@ const Navbar = () => {
                 {cartCount > 0 && <span className="absolute -top-1 -right-1 size-4 bg-app-orange text-white text-[10px] rounded-full flex items-center justify-center">{cartCount}</span>}
               </button>
               
-              {/* User */}
+              {/* User Menu Trigger */}
               <div className="relative">
                 {user ? (
                   <button onClick={()=> setUserMenuOpen(!userMenuOpen)} className="flex items-center gap-2 p-2">
                     <div className="size-7 rounded-full bg-green-950 text-white flex items-center justify-center">
-                      {user.name.charAt(0).toUpperCase()}
+                      {user.name ? user.name.charAt(0).toUpperCase() : "U"}
                     </div>
                     <ChevronDownIcon className="size-3 text-zinc-500"/>
                   </button>
                 ) : (
                   <div className="flex items-center justify-center gap-2">
-                    <Link to="/login" className="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-950 rounded-full  hover:bg-green-950-light transition-colors">
-                    <UserIcon size={16}/> Iniciar Sesión
+                    <Link to="/login" className="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-green-950 rounded-full hover:bg-green-900 transition-colors">
+                      <UserIcon size={16}/> Iniciar Sesión
                     </Link>
-                    {userMenuOpen ? <XIcon className="md:hidden" onClick={() => setUserMenuOpen(!userMenuOpen)}/> : <MenuIcon className="md:hidden" onClick={() => setUserMenuOpen(!userMenuOpen)}/>}
+                    {userMenuOpen ? <XIcon className="md:hidden cursor-pointer size-6" onClick={() => setUserMenuOpen(!userMenuOpen)}/> : <MenuIcon className="md:hidden cursor-pointer size-6" onClick={() => setUserMenuOpen(!userMenuOpen)}/>}
                   </div>
                 )}
 
+                {/* Dropdown Menu */}
                 {userMenuOpen && (
                   <>
                     <div className="fixed inset-0 z-40" onClick={()=>setUserMenuOpen(false)} />
@@ -86,21 +89,34 @@ const Navbar = () => {
                           <p className="text-xs text-zinc-500">{user?.email}</p>
                         </div>
                       )}
+                      
                       <div onClick={()=> setUserMenuOpen(false)}>
-                        {!user && <Link to='/iniciar-sesion' className="dropdown-link"><UserIcon size={16}/>Iniciar Sesión</Link>}
-                        {user && <Link to='/ordenes' className="dropdown-link"><PackageIcon size={16}/>Mis Ordenes</Link>}
-                        {user && <Link to='/addresses' className="dropdown-link"><MapPinIcon size={16}/>Direcciones</Link>}
+                        {!user && <Link to='/login' className="dropdown-link flex items-center gap-2 px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50"><UserIcon size={16}/>Iniciar Sesión</Link>}
+                        {user && <Link to='/ordenes' className="dropdown-link flex items-center gap-2 px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50"><PackageIcon size={16}/>Mis Órdenes</Link>}
+                        {user && <Link to='/addresses' className="dropdown-link flex items-center gap-2 px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50"><MapPinIcon size={16}/>Direcciones</Link>}
                         
-                        {/* Enlaces repetidos en móvil si está el menú abierto */}
+                        {/* Enlaces repetidos en móvil */}
                         <div className="md:hidden border-t border-app-border my-1 pt-1">
-                          <Link to='/' className="dropdown-link">Inicio</Link>
-                          <Link to='/products' className="dropdown-link">Productos</Link>
-                          <Link to='/deals' className="dropdown-link">Ofertas</Link>
+                          <Link to='/' className="dropdown-link flex items-center gap-2 px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50">Inicio</Link>
+                          <Link to='/products' className="dropdown-link flex items-center gap-2 px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50">Productos</Link>
+                          <Link to='/deals' className="dropdown-link flex items-center gap-2 px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50">Ofertas</Link>
                         </div>
 
+                        {/* SECCIÓN DE ADMINISTRADOR CORREGIDA (Usa isAdmin como booleano) */}
                         {user?.isAdmin && (
-                          <Link to='/administrador/productos' className="dropdown-link border-t border-app-border"><ShieldIcon className="text-app-orange-dark" size={16}/><span className="text-app-orange-dark">Panel Administrador</span></Link>
+                          <div className="border-t border-app-border my-1 pt-1">
+                            <Link to='/admin/products' className="dropdown-link flex items-center gap-2 px-4 py-2 text-sm text-app-orange-dark hover:bg-orange-50">
+                              <ShieldIcon size={16}/> Products (Admin)
+                            </Link>
+                            <Link to='/admin/orders' className="dropdown-link flex items-center gap-2 px-4 py-2 text-sm text-app-orange-dark hover:bg-orange-50">
+                              <PackageIcon size={16}/> Orders (Admin)
+                            </Link>
+                            <Link to='/administrador/productos' className="dropdown-link flex items-center gap-2 px-4 py-2 text-sm font-semibold text-app-orange-dark hover:bg-orange-50">
+                              <ShieldIcon size={16}/> Panel Administrador
+                            </Link>
+                          </div>
                         )}
+
                         {user && (
                           <div className="border-t border-app-border pt-1">
                             <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 w-full transition-colors">
